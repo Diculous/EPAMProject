@@ -1,5 +1,7 @@
 package by.epam.training;
 
+import java.util.Objects;
+
 public class BankAccount {
     private Long accountNumber;
     protected Boolean isBlocked = false;
@@ -22,7 +24,7 @@ public class BankAccount {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(accountNumber);
     }
 
     @Override

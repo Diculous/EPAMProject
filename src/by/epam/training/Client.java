@@ -1,6 +1,7 @@
 package by.epam.training;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Client {
@@ -58,7 +59,7 @@ public class Client {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(name, creditCards);
     }
 
     @Override

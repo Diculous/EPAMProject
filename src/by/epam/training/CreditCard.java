@@ -1,5 +1,7 @@
 package by.epam.training;
 
+import java.util.Objects;
+
 public class CreditCard {
     private Long cardNumber;
     private BankAccount account;
@@ -30,7 +32,7 @@ public class CreditCard {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(cardNumber);
     }
 
     @Override

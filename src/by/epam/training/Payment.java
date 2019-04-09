@@ -1,8 +1,10 @@
 package by.epam.training;
 
+import java.util.Objects;
+
 public class Payment {
-    BankAccount bankAccount;
-    Integer paymentValue;
+    private BankAccount bankAccount;
+    private Integer paymentValue;
 
     public Payment() {
     }
@@ -30,7 +32,7 @@ public class Payment {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(bankAccount, paymentValue);
     }
 
     @Override
