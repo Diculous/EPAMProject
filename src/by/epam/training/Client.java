@@ -44,7 +44,7 @@ public class Client {
         this.name = name;
     }
 
-    public Set<CreditCard> getCreditCards() {
+    public HashSet<CreditCard> getCreditCards() {
         return creditCards;
     }
 
@@ -63,10 +63,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", creditCards=" + creditCards +
-                '}';
+        return "Client: " +
+                "name - " + name +
+                ", creditCards - " + creditCards;
     }
-
 }

@@ -35,9 +35,8 @@ public class CreditCard {
 
     @Override
     public String toString() {
-        return "CreditCard{" +
-                "cardNumber=" + cardNumber +
-                ", account=" + account.toString() +
-                '}';
+        return "CreditCard: " +
+                "cardNumber - " + cardNumber +
+                ", " + account.toString();
     }
 }

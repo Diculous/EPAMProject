@@ -35,9 +35,8 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "bankAccount=" + bankAccount +
-                ", paymentValue=" + paymentValue +
-                '}';
+        return "Payment: " +
+                bankAccount +
+                ", paymentValue - " + paymentValue;
     }
 }
