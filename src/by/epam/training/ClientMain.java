@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class ClientMain {
     public static void main(String[] args) {
-        Set<Payment> payments = new HashSet<>();
+ /*       Set<Payment> payments = new HashSet<>();
 
         BankAccount bankAccount = new BankAccount();
         CreditCard creditCard = new CreditCard(125565545667654L, bankAccount);
@@ -29,5 +29,6 @@ public class ClientMain {
              ) {
             System.out.println(pay);
         }
+        */
     }
 }
