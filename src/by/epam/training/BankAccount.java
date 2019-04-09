@@ -3,9 +3,10 @@ package by.epam.training;
 import java.util.Objects;
 
 public class BankAccount {
-    private Long accountNumber;
-    protected Boolean isBlocked = false;
+    private Long accountNumber;             //account number in payment system
+    protected Boolean isBlocked = false;    //blocked account indicator
 
+                                                                                //getters and setters
     public Long getAccountNumber() {
         return accountNumber;
     }
@@ -22,7 +23,7 @@ public class BankAccount {
         isBlocked = blocked;
     }
 
-    @Override
+    @Override                               //override hashCode and toString methods
     public int hashCode() {
         return Objects.hash(accountNumber);
     }

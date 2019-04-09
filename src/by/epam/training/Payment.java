@@ -3,8 +3,8 @@ package by.epam.training;
 import java.util.Objects;
 
 public class Payment {
-    private BankAccount bankAccount;
-    private Integer paymentValue;
+    private BankAccount bankAccount;        //used bank account
+    private Integer paymentValue;           //amount of money used in payment
 
     public Payment() {
     }
@@ -13,7 +13,7 @@ public class Payment {
         this.bankAccount = bankAccount;
         this.paymentValue = paymentValue;
     }
-
+                                                                        //getters and setters
     public BankAccount getBankAccount() {
         return bankAccount;
     }
@@ -30,7 +30,7 @@ public class Payment {
         this.paymentValue = paymentValue;
     }
 
-    @Override
+    @Override                                                                 //override hashCode and toString methods
     public int hashCode() {
         return Objects.hash(bankAccount, paymentValue);
     }

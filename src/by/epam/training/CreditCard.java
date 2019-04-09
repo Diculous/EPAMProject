@@ -3,8 +3,8 @@ package by.epam.training;
 import java.util.Objects;
 
 public class CreditCard {
-    private Long cardNumber;
-    private BankAccount account;
+    private Long cardNumber;            //card number
+    private BankAccount account;        //bank account linked to the credit card
 
     public CreditCard() {
     }
@@ -13,7 +13,7 @@ public class CreditCard {
         this.cardNumber = cardNumber;
         this.account = account;
     }
-
+                                                            // getters and setters
     public Long getCardNumber() {
         return cardNumber;
     }
@@ -30,7 +30,7 @@ public class CreditCard {
         this.account = account;
     }
 
-    @Override
+    @Override                                               //override hashCode and toString methods
     public int hashCode() {
         return Objects.hash(cardNumber);
     }

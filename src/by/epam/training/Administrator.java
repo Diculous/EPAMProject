@@ -1,5 +1,5 @@
 package by.epam.training;
 
 public class Administrator {
-    void unblock() {}
+    void unblock() {}           //method which using to unblock the bank account
 }
