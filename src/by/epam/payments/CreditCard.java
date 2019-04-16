@@ -1,4 +1,4 @@
-package by.epam.training;
+package by.epam.payments;
 
 import java.util.Objects;
 

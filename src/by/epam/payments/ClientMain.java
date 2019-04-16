@@ -1,7 +1,4 @@
-package by.epam.training;
-
-import java.util.HashSet;
-import java.util.Set;
+package by.epam.payments;
 
 public class ClientMain {
     public static void main(String[] args) {

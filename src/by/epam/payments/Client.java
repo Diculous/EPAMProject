@@ -1,8 +1,7 @@
-package by.epam.training;
+package by.epam.payments;
 
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Client {
     private String name;                            //client name
