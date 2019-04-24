@@ -10,8 +10,17 @@ public class ClientMain {
        // Utility utility = new Utility();
       //  utility.getConnection();
 
+        Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
+
         ClientDao clientDao = new ClientDao();
         List<Client> all = clientDao.findAll();
+        for(Client cl : all) {
+            System.out.println(cl);
+        }
+        System.out.println("");
+      //  clientDao.insertClient(clientZero);
+
+        all = clientDao.findAll();
         for(Client cl : all) {
             System.out.println(cl);
         }

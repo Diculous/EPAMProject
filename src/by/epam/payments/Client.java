@@ -124,7 +124,8 @@ public class Client {
     @Override
     public String toString() {
         return "Client: " +
-                "name - " + name +
+                "id - " + id +
+                ", name - " + name +
                 ", adress - " + adress +
                 ", passport - " + passport +
                 ", date - " + dateOfBirth;
