@@ -1,7 +1,22 @@
 package by.epam.payments;
 
+import by.epam.by.epam.dao.ClientDao;
+import by.epam.util.Utility;
+
+import java.util.List;
+
 public class ClientMain {
     public static void main(String[] args) {
+
+       // Utility utility = new Utility();
+      //  utility.getConnection();
+
+        ClientDao clientDao = new ClientDao();
+        List<Client> all = clientDao.findAll();
+        for(Client cl : all) {
+            System.out.println(cl);
+        }
+
      /*   Set<Payment> payments = new HashSet<>();
 
         BankAccount bankAccount = new BankAccount();

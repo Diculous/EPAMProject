@@ -4,14 +4,71 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class Client {
+    private int id;
     private String name;                            //client name
-    private HashSet<CreditCard> creditCards;        //array of client's credit cards
+    private String adress;                            //client name
+    private String passport;
+    private String dateOfBirth;
 
     public Client() {
+    }
+
+    public Client(int id, String name, String adress, String passport, String dateOfBirth) {
+        this.id = id;
+        this.name = name;
+        this.adress = adress;
+        this.passport = passport;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    // private HashSet<CreditCard> creditCards;        //array of client's credit cards
+
+  /*  public Client() {
         this.creditCards = new HashSet<>();
     }
 
-    public Client(String name, HashSet<CreditCard> creditCards) {
+    public Client(int id ,String name, HashSet<CreditCard> creditCards) {
+        this.id = id;
         this.name = name;
         this.creditCards = creditCards;
     }
@@ -35,6 +92,9 @@ public class Client {
 
         return bankAccount.isBlocked ? null : payment;
     }
+    public int getId() { return id;}
+
+    public void setId(int id) {this.id = id;}
                                                     //getters and setters
     public String getName() {
         return name;
@@ -55,16 +115,18 @@ public class Client {
     public void addCreditCard(CreditCard creditCard) {
         this.creditCards.add(creditCard);
     }
-                                                //override hashCode and toString methods
+                     */                           //override hashCode and toString methods
     @Override
     public int hashCode() {
-        return Objects.hash(name, creditCards);
+        return Objects.hash(name, adress);
     }
 
     @Override
     public String toString() {
         return "Client: " +
                 "name - " + name +
-                ", creditCards - " + creditCards;
+                ", adress - " + adress +
+                ", passport - " + passport +
+                ", date - " + dateOfBirth;
     }
 }
