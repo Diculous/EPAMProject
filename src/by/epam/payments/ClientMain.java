@@ -1,7 +1,6 @@
 package by.epam.payments;
 
-import by.epam.by.epam.dao.ClientDao;
-import by.epam.util.Utility;
+import by.epam.dao.ClientDao;
 
 import java.util.List;
 

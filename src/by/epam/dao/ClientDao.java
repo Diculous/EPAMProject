@@ -1,4 +1,4 @@
-package by.epam.by.epam.dao;
+package by.epam.dao;
 
 import by.epam.payments.Client;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDao{
-    public static final String SQL_SELECT_ALL_ABONENTS = "SELECT * FROM clients"; //SELECT ALL
+    public static final String SQL_SELECT_ALL_ABONENTS = "SELECT * FROM clients";
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/bank";
     private final String USER = "root";
