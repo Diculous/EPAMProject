@@ -12,6 +12,7 @@ public class ClientMain {
       //  utility.getConnection();
 
         Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
+        CardType cardTypeZero = new CardType("Diamond", 50);
 
         ClientDao clientDao = new ClientDao();
         CardTypeDao cardType = new CardTypeDao();
@@ -23,11 +24,14 @@ public class ClientMain {
         }
        // System.out.println();
       //  clientDao.insertClient(clientZero);
+       // cardType.insertCardType(cardTypeZero);
 
       //  all = clientDao.findAll();
       //  for(Client cl : all) {
       //      System.out.println(cl);
       //  }
+
+       // cardTypes = cardType.findAll();
 
         System.out.println();
 

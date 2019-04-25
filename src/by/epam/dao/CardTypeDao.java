@@ -46,4 +46,33 @@ public class CardTypeDao {
         }
         return cardTypes;
     }
+
+    public boolean insertCardType(CardType cardType) {
+        boolean flag = false;
+        Connection cn = null;
+        PreparedStatement st = null;
+
+        try {
+            Class.forName(DRIVER);
+            cn = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("connection established");
+            st = cn.prepareStatement(SQL_CREATE_NEW_CARD_TYPE);
+            st.setString(1, cardType.getCardType());
+            st.setInt(2, cardType.getCashBack());
+            st.executeUpdate();
+            flag = true;
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
+    }
 }

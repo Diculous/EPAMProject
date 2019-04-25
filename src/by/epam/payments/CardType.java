@@ -30,7 +30,7 @@ public class CardType {
     @Override
     public String toString() {
         return "CardType: " +
-                ", Type - " + cardType +
-                ", cashback - " + cashBack;
+               "Type - " + cardType +
+               ", cashback - " + cashBack;
     }
 }
