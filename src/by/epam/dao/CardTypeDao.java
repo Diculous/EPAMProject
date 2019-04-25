@@ -1,7 +1,6 @@
 package by.epam.dao;
 
 import by.epam.payments.CardType;
-import by.epam.payments.Client;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -87,6 +86,36 @@ public class CardTypeDao {
             System.out.println("connection established");
             st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
             st.setString(1, cardType.getCardType());
+            st.executeUpdate();
+            flag = true;
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
+    }
+
+    public boolean updateCardType(CardType cardType, String oldCardType) {
+        boolean flag = false;
+        Connection cn = null;
+        PreparedStatement st = null;
+
+        try {
+            Class.forName(DRIVER);
+            cn = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("connection established");
+            st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD_TYPE);
+            st.setString(1, cardType.getCardType());
+            st.setInt(2, cardType.getCashBack());
+            st.setString(3, oldCardType);
             st.executeUpdate();
             flag = true;
         }

@@ -12,12 +12,26 @@ public class ClientMain {
       //  utility.getConnection();
 
         Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
-        CardType cardTypeZero = new CardType("Diamond", 50);
+        CardType cardTypeZero = new CardType("Gold", 10);
 
         ClientDao clientDao = new ClientDao();
         CardTypeDao cardType = new CardTypeDao();
 
         List<CardType> cardTypes = cardType.findAll();
+
+        for (CardType ct : cardTypes) {
+            System.out.println(ct);
+        }
+
+        cardType.updateCardType(cardTypeZero, "Goldenous");
+
+        cardTypes = cardType.findAll();
+
+        for (CardType ct : cardTypes) {
+            System.out.println(ct);
+        }
+
+        /*
        // List<Client> all = clientDao.findAll();
       //  for(Client cl : all) {
        //     System.out.println(cl);
@@ -53,7 +67,7 @@ public class ClientMain {
         for(CardType cl : cardTypes) {
             System.out.println(cl);
         }
-
+*/
      /*   Set<Payment> payments = new HashSet<>();
 
         BankAccount bankAccount = new BankAccount();
