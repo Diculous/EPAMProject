@@ -75,4 +75,33 @@ public class CardTypeDao {
         }
         return flag;
     }
+
+    public boolean deleteCardType(CardType cardType) {
+        boolean flag = false;
+        Connection cn = null;
+        PreparedStatement st = null;
+
+        try {
+            Class.forName(DRIVER);
+            cn = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("connection established");
+            st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
+            st.setString(1, cardType.getCardType());
+            st.executeUpdate();
+            flag = true;
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
+    }
+
 }

@@ -18,13 +18,19 @@ public class ClientMain {
         CardTypeDao cardType = new CardTypeDao();
 
         List<CardType> cardTypes = cardType.findAll();
-        List<Client> all = clientDao.findAll();
-        for(Client cl : all) {
+       // List<Client> all = clientDao.findAll();
+      //  for(Client cl : all) {
+       //     System.out.println(cl);
+      //  }
+
+        for(CardType cl : cardTypes) {
             System.out.println(cl);
         }
+
        // System.out.println();
       //  clientDao.insertClient(clientZero);
-       // cardType.insertCardType(cardTypeZero);
+        cardType.insertCardType(cardTypeZero);
+        cardTypes = cardType.findAll();
 
       //  all = clientDao.findAll();
       //  for(Client cl : all) {
@@ -32,6 +38,15 @@ public class ClientMain {
       //  }
 
        // cardTypes = cardType.findAll();
+
+        System.out.println();
+
+        for(CardType cl : cardTypes) {
+            System.out.println(cl);
+        }
+
+        cardType.deleteCardType(cardTypeZero);
+        cardTypes = cardType.findAll();
 
         System.out.println();
 
