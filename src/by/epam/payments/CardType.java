@@ -27,6 +27,7 @@ public class CardType {
     public void setCashBack(int cashBack) {
         this.cashBack = cashBack;
     }
+
     @Override
     public String toString() {
         return "CardType: " +
