@@ -75,7 +75,7 @@ public class CardTypeDao {
         return flag;
     }
 
-    public boolean deleteCardType(CardType cardType) {
+    public boolean updateCardType(CardType cardType, String oldCardType) {
         boolean flag = false;
         Connection cn = null;
         PreparedStatement st = null;
@@ -84,8 +84,10 @@ public class CardTypeDao {
             Class.forName(DRIVER);
             cn = DriverManager.getConnection(URL, USER, PASS);
             System.out.println("connection established");
-            st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
+            st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD_TYPE);
             st.setString(1, cardType.getCardType());
+            st.setInt(2, cardType.getCashBack());
+            st.setString(3, oldCardType);
             st.executeUpdate();
             flag = true;
         }
@@ -103,7 +105,7 @@ public class CardTypeDao {
         return flag;
     }
 
-    public boolean updateCardType(CardType cardType, String oldCardType) {
+    public boolean deleteCardType(CardType cardType) {
         boolean flag = false;
         Connection cn = null;
         PreparedStatement st = null;
@@ -112,10 +114,8 @@ public class CardTypeDao {
             Class.forName(DRIVER);
             cn = DriverManager.getConnection(URL, USER, PASS);
             System.out.println("connection established");
-            st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD_TYPE);
+            st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
             st.setString(1, cardType.getCardType());
-            st.setInt(2, cardType.getCashBack());
-            st.setString(3, oldCardType);
             st.executeUpdate();
             flag = true;
         }

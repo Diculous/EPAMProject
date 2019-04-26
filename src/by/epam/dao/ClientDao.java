@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ClientDao{
     private static final String SQL_SELECT_ALL_ABONENTS = "SELECT * FROM clients";
-    private static final String SQL_CREATE_NEW_CLIENT = "INSERT INTO clients(idClient, name, adress, passportNumber, dateOfBirth) VALUES(?,?,?,?,?)";
+    private static final String SQL_CREATE_NEW_CLIENT = "INSERT INTO clients(name, adress, passportNumber, dateOfBirth) VALUES(?,?,?,?)";
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/bank";
     private final String USER = "root";
@@ -56,14 +56,12 @@ public class ClientDao{
             cn = DriverManager.getConnection(URL, USER, PASS);
             System.out.println("connection established");
             st = cn.prepareStatement(SQL_CREATE_NEW_CLIENT);
-            st.setInt(1, client.getId());
-            st.setString(2, client.getName());
-            st.setString(3, client.getAdress());
-            st.setString(4, client.getPassport());
-            st.setString(5, client.getDateOfBirth());
+            st.setString(1, client.getName());
+            st.setString(2, client.getAdress());
+            st.setString(3, client.getPassport());
+            st.setString(4, client.getDateOfBirth());
             st.executeUpdate();
             flag = true;
-
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

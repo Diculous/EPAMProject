@@ -2,7 +2,9 @@ package by.epam.payments;
 
 import by.epam.dao.CardTypeDao;
 import by.epam.dao.ClientDao;
+import by.epam.dao.CreditCardDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientMain {
@@ -11,7 +13,19 @@ public class ClientMain {
        // Utility utility = new Utility();
       //  utility.getConnection();
 
-        Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
+        List<CreditCard> creditCards = new ArrayList<>();
+        CreditCardDao creditCardDao = new CreditCardDao();
+        CreditCard creditCard = new CreditCard(1234567890L, 12345L, "Gold");
+
+        creditCards = creditCardDao.findAll();
+
+        for(CreditCard cr : creditCards) {
+            System.out.println(cr);
+        }
+
+        //creditCardDao.deleteCard(creditCard);
+
+      /*  Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
         CardType cardTypeZero = new CardType("Gold", 10);
 
         ClientDao clientDao = new ClientDao();
