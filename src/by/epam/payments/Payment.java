@@ -3,22 +3,24 @@ package by.epam.payments;
 import java.util.Objects;
 
 public class Payment {
-    private BankAccount bankAccount;        //used bank account
+    private Long bankAccount;        //used bank account
     private Integer paymentValue;           //amount of money used in payment
+    private String paymentType;
 
     public Payment() {
     }
 
-    public Payment(BankAccount bankAccount, Integer paymentValue) {
+    public Payment(Long bankAccount, Integer paymentValue, String paymentType) {
         this.bankAccount = bankAccount;
         this.paymentValue = paymentValue;
+        this.paymentType = paymentType;
     }
                                                                         //getters and setters
-    public BankAccount getBankAccount() {
+    public Long getBankAccount() {
         return bankAccount;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
+    public void setBankAccount(Long bankAccount) {
         this.bankAccount = bankAccount;
     }
 
@@ -30,6 +32,14 @@ public class Payment {
         this.paymentValue = paymentValue;
     }
 
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
     @Override                                                                 //override hashCode and toString methods
     public int hashCode() {
         return Objects.hash(bankAccount, paymentValue);
@@ -38,7 +48,8 @@ public class Payment {
     @Override
     public String toString() {
         return "Payment: " +
-                bankAccount +
+                " bank account - " + bankAccount +
+                ", payment type - " + paymentType +
                 ", paymentValue - " + paymentValue;
     }
 }

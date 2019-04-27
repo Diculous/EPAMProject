@@ -1,7 +1,7 @@
 package by.epam.dao;
 
-import by.epam.payments.CardType;
 import by.epam.payments.CreditCard;
+import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,22 +23,19 @@ public class CreditCardDao {
 
     public List<CreditCard> findAll() {
         List<CreditCard> cardTypes = new ArrayList<>();
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         Statement st = null;
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.createStatement();
             ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_CARDS);
             while (resultSet.next()) {
                 CreditCard creditCard = new CreditCard();
                 creditCard.setCardNumber(resultSet.getLong("cardNumber"));
                 creditCard.setAccount(resultSet.getLong("accNumber"));
-                creditCard.setCardType(resultSet.getString("cardtype.cardType"));
+                creditCard.setCardType(resultSet.getString("cardType"));
                 cardTypes.add(creditCard);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println("SQL exception (request or table failed): " + e);
         } finally {
             try {
@@ -53,13 +50,10 @@ public class CreditCardDao {
 
     public boolean insertCard(CreditCard creditCard) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();;
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_CREATE_CARD);
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
@@ -67,7 +61,7 @@ public class CreditCardDao {
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {
@@ -83,13 +77,10 @@ public class CreditCardDao {
 
     public boolean updateCardType(CreditCard creditCard, Long oldCreditCard) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();;
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD);
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
@@ -98,7 +89,7 @@ public class CreditCardDao {
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {
@@ -114,19 +105,16 @@ public class CreditCardDao {
 
     public boolean deleteCard(CreditCard creditCard) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();;
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD);
             st.setLong(1, creditCard.getCardNumber());
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {

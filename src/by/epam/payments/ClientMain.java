@@ -1,9 +1,6 @@
 package by.epam.payments;
 
-import by.epam.dao.CardTypeDao;
-import by.epam.dao.ClientDao;
-import by.epam.dao.CreditCardDao;
-import by.epam.dao.OperationTypeDao;
+import by.epam.dao.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +8,11 @@ import java.util.List;
 public class ClientMain {
     public static void main(String[] args) {
 
-       // Utility utility = new Utility();
-      //  utility.getConnection();
+        PaymentDao paymentDao = new PaymentDao();
+        List<Payment> payments = paymentDao.findAll();
 
-        List<OperationType> operationTypes = new ArrayList<>();
-        CreditCardDao creditCardDao = new CreditCardDao();
-        OperationTypeDao operationTypeDao = new OperationTypeDao();
-        OperationType operationType = new OperationType("rerefill");
-
-        operationTypes = operationTypeDao.findAll();
-
-        for(OperationType op : operationTypes) {
-            System.out.println(op);
+        for(Payment pay : payments) {
+            System.out.println(pay);
         }
 
         //creditCardDao.deleteCard(creditCard);
