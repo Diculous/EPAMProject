@@ -16,11 +16,6 @@ public class CreditCardDao {
             "                                                                                  cards.AccID=(SELECT idAccount FROM bank.accounts WHERE accNumber=?) WHERE cardNumber=?";
     private static final String SQL_DELETE_CURRENT_CARD = "DELETE FROM bank.cards WHERE cardNumber=?";
 
-    private final String DRIVER = "com.mysql.jdbc.Driver";
-    private final String URL = "jdbc:mysql://localhost:3306/bank";
-    private final String USER = "root";
-    private final String PASS = "root";
-
     public List<CreditCard> findAll() {
         List<CreditCard> cardTypes = new ArrayList<>();
         Connection cn = SQLDaoFactory.createConnection();

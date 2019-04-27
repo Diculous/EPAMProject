@@ -9,10 +9,10 @@ import java.util.List;
 
 public class PaymentDao {
     private static final String SQL_SELECT_ALL_PAYMENTS = "SELECT idPayment, accNumber, operationtype.operationType, paymentValue FROM bank.payments " +
-            "JOIN bank.operationtype ON operationtype.idOperationType=payments.operationType \n" +
-            "JOIN bank.accounts ON accounts.idAccount=payments.AccID";
+                                                            "JOIN bank.operationtype ON operationtype.idOperationType=payments.operationType \n" +
+                                                            "JOIN bank.accounts ON accounts.idAccount=payments.AccID";
     private static final String SQL_CREATE_PAYMENT = "INSERT INTO bank.payments(paymentValue, operationType, AccID) VALUES(?,(SELECT idOperationType FROM bank.operationtype WHERE operationType=?)," +
-            "                                                                                              (SELECT idAccount FROM bank.accounts WHERE accNumber=?))";
+            "                                                                                                                (SELECT idAccount FROM bank.accounts WHERE accNumber=?))";
     private static final String SQL_UPDATE_PAYMENT = "UPDATE bank.payments SET paymentValue=?, operationType=(SELECT idOperationType FROM bank.operationType WHERE operationType=?)," +
             "                                                                                  payments.AccID=(SELECT idAccount FROM bank.accounts WHERE accNumber=?) WHERE idPayment=?";
     private static final String SQL_DELETE_PAYMENT = "DELETE FROM bank.payments WHERE idPayment=?";

@@ -1,6 +1,7 @@
 package by.epam.dao;
 
 import by.epam.payments.CardType;
+import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,19 +13,11 @@ public class CardTypeDao {
     private static final String SQL_UPDATE_CURRENT_CARD_TYPE = "UPDATE bank.cardType SET cardType=?, cashbackBonus=? WHERE cardType=?";
     private static final String SQL_DELETE_CURRENT_CARD_TYPE = "DELETE FROM bank.cardType WHERE cardType=?";
 
-    private final String DRIVER = "com.mysql.jdbc.Driver";
-    private final String URL = "jdbc:mysql://localhost:3306/bank";
-    private final String USER = "root";
-    private final String PASS = "root";
-
     public List<CardType> findAll() {
         List<CardType> cardTypes = new ArrayList<>();
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         Statement st = null;
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.createStatement();
             ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_TYPES_OF_CARDS);
             while (resultSet.next()) {
@@ -33,7 +26,7 @@ public class CardTypeDao {
                 cardType.setCashBack(resultSet.getInt("cashbackBonus"));
                 cardTypes.add(cardType);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println("SQL exception (request or table failed): " + e);
         } finally {
             try {
@@ -48,20 +41,17 @@ public class CardTypeDao {
 
     public boolean insertCardType(CardType cardType) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_CREATE_NEW_CARD_TYPE);
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {
@@ -77,13 +67,10 @@ public class CardTypeDao {
 
     public boolean updateCardType(CardType cardType, String oldCardType) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD_TYPE);
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
@@ -91,7 +78,7 @@ public class CardTypeDao {
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {
@@ -107,19 +94,16 @@ public class CardTypeDao {
 
     public boolean deleteCardType(CardType cardType) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
             st.setString(1, cardType.getCardType());
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {
