@@ -1,39 +1,47 @@
 package by.epam.dao;
 
 import by.epam.payments.Client;
+import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDao{
-    private static final String SQL_SELECT_ALL_ABONENTS = "SELECT * FROM clients";
+    private static final String SQL_SELECT_ALL_ABONENTS = "SELECT idClient, name, address, passportNumber, dateOfBirth FROM bank.clients \n" +
+                                                          "LEFT JOIN bank.accounts ON accounts.ownerID=clients.idClient\n" +
+                                                          "ORDER BY idClient;";
+    private static final String SQL_SELECT_ACCOUNTS_FOR_CLIENT = "SELECT accNumber FROM bank.accounts JOIN bank.clients ON accounts.ownerID=clients.idClient WHERE idClient=";
     private static final String SQL_CREATE_NEW_CLIENT = "INSERT INTO clients(name, adress, passportNumber, dateOfBirth) VALUES(?,?,?,?)";
-    private final String DRIVER = "com.mysql.jdbc.Driver";
-    private final String URL = "jdbc:mysql://localhost:3306/bank";
-    private final String USER = "root";
-    private final String PASS = "root";
 
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         Statement st = null;
+        Statement st2 = null;
+        ArrayList<Long> accounts = new ArrayList<>();
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.createStatement();
             ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_ABONENTS);
             while (resultSet.next()) {
-                Client client = new Client();
-                client.setId(resultSet.getInt("idClient"));
-                client.setName(resultSet.getString("name"));
-                client.setAdress(resultSet.getString("adress"));
-                client.setPassport(resultSet.getString("passportNumber"));
-                client.setDateOfBirth(resultSet.getString("dateOfBirth"));
-                clients.add(client);
+
+                st2 = cn.createStatement();
+                ResultSet resultSet2 = st2.executeQuery(SQL_SELECT_ACCOUNTS_FOR_CLIENT + resultSet.getInt("idClient"));
+
+                    Client client = new Client();
+                    client.setId(resultSet.getInt("idClient"));
+                    client.setName(resultSet.getString("name"));
+                    client.setAddress(resultSet.getString("address"));
+                    client.setPassport(resultSet.getString("passportNumber"));
+                    client.setDateOfBirth(resultSet.getString("dateOfBirth"));
+                    accounts.add(resultSet.getLong("accNumber"));
+
+                    client.setAccounts(accounts);
+
+                    clients.add(client);
+
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println("SQL exception (request or table failed): " + e);
         } finally {
             try {
@@ -48,22 +56,19 @@ public class ClientDao{
 
     public boolean insertClient(Client client) {
         boolean flag = false;
-        Connection cn = null;
+        Connection cn = SQLDaoFactory.createConnection();
         PreparedStatement st = null;
 
         try {
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("connection established");
             st = cn.prepareStatement(SQL_CREATE_NEW_CLIENT);
             st.setString(1, client.getName());
-            st.setString(2, client.getAdress());
+            st.setString(2, client.getAddress());
             st.setString(3, client.getPassport());
             st.setString(4, client.getDateOfBirth());
             st.executeUpdate();
             flag = true;
         }
-        catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         finally {

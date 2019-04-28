@@ -1,23 +1,42 @@
 package by.epam.payments;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Client {
     private int id;
-    private String name;                            //client name
-    private String adress;                            //client name
+    private String name;
+    private String address;
     private String passport;
     private String dateOfBirth;
+    private ArrayList<Long> accounts;
 
     public Client() {
+        this.accounts = new ArrayList<>();
     }
 
-    public Client(int id, String name, String adress, String passport, String dateOfBirth) {
+    public Client(int id, String name, String address, String passport, String dateOfBirth, ArrayList<Long> accounts) {
         this.id = id;
         this.name = name;
-        this.adress = adress;
+        this.address = address;
         this.passport = passport;
         this.dateOfBirth = dateOfBirth;
+        this.accounts = accounts;
+    }
+
+  /*  public Client(String name, BankAccount bankAccount) {
+        this.name = name;
+        this.accounts = new ArrayList<>();
+        accounts.add(bankAccount.getAccountNumber());
+    }
+*/
+
+    public ArrayList<Long> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(ArrayList<Long> accounts) {
+        this.accounts = accounts;
     }
 
     public int getId() {
@@ -36,12 +55,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPassport() {
@@ -60,23 +79,8 @@ public class Client {
         this.dateOfBirth = dateOfBirth;
     }
 
-    // private HashSet<CreditCard> creditCards;        //array of client's credit cards
 
-  /*  public Client() {
-        this.creditCards = new HashSet<>();
-    }
-
-    public Client(int id ,String name, HashSet<CreditCard> creditCards) {
-        this.id = id;
-        this.name = name;
-        this.creditCards = creditCards;
-    }
-
-    public Client(String name, CreditCard creditCard) {
-        this.name = name;
-        this.creditCards = new HashSet<>();
-        creditCards.add(creditCard);
-    }
+  /*
 
     void fill() {}                                  //method to replenish bank account
 
@@ -91,33 +95,11 @@ public class Client {
 
         return bankAccount.isBlocked ? null : payment;
     }
-    public int getId() { return id;}
 
-    public void setId(int id) {this.id = id;}
-                                                    //getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public HashSet<CreditCard> getCreditCards() {
-        return creditCards;
-    }
-
-    public void setCreditCards(HashSet<CreditCard> creditCards) {
-        this.creditCards = creditCards;
-    }
-
-    public void addCreditCard(CreditCard creditCard) {
-        this.creditCards.add(creditCard);
-    }
                      */                           //override hashCode and toString methods
     @Override
     public int hashCode() {
-        return Objects.hash(name, adress);
+        return Objects.hash(name, address);
     }
 
     @Override
@@ -125,7 +107,7 @@ public class Client {
         return "Client: " +
                 "id - " + id +
                 ", name - " + name +
-                ", adress - " + adress +
+                ", address - " + address +
                 ", passport - " + passport +
                 ", date - " + dateOfBirth;
     }

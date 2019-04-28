@@ -8,11 +8,12 @@ import java.util.List;
 public class ClientMain {
     public static void main(String[] args) {
 
-        PaymentDao paymentDao = new PaymentDao();
-        List<Payment> payments = paymentDao.findAll();
+        ClientDao clientDao = new ClientDao();
+        List<Client> clients = clientDao.findAll();
 
-        for(Payment pay : payments) {
-            System.out.println(pay);
+        for(Client cl : clients) {
+            System.out.println(cl);
+            System.out.println(cl.getAccounts());
         }
 
         //creditCardDao.deleteCard(creditCard);

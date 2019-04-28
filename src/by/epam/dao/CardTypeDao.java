@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardTypeDao {
+public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
     private static final String SQL_SELECT_ALL_TYPES_OF_CARDS = "SELECT * FROM cardType";
     private static final String SQL_CREATE_NEW_CARD_TYPE = "INSERT INTO cardType(cardType, cashbackBonus) VALUES(?,?)";
     private static final String SQL_UPDATE_CURRENT_CARD_TYPE = "UPDATE bank.cardType SET cardType=?, cashbackBonus=? WHERE cardType=?";

@@ -1,5 +1,6 @@
 package by.epam.dao;
 
+import by.epam.interfacesDao.DAOOperationType;
 import by.epam.payments.OperationType;
 import by.epam.util.SQLDaoFactory;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperationTypeDao {
+public class OperationTypeDao implements DAOOperationType {
 
     private static final String SQL_SELECT_ALL_TYPES_OF_PAYMENTS = "SELECT * FROM operationtype";
     private static final String SQL_CREATE_NEW_PAYMENT_TYPE = "INSERT INTO operationtype(operationType) VALUE (?)";

@@ -1,5 +1,6 @@
 package by.epam.dao;
 
+import by.epam.interfacesDao.DAOPayment;
 import by.epam.payments.Payment;
 import by.epam.util.SQLDaoFactory;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentDao {
+public class PaymentDao implements DAOPayment {
     private static final String SQL_SELECT_ALL_PAYMENTS = "SELECT idPayment, accNumber, operationtype.operationType, paymentValue FROM bank.payments " +
                                                             "JOIN bank.operationtype ON operationtype.idOperationType=payments.operationType \n" +
                                                             "JOIN bank.accounts ON accounts.idAccount=payments.AccID";

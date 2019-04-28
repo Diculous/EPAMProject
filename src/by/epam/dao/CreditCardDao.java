@@ -1,5 +1,6 @@
 package by.epam.dao;
 
+import by.epam.interfacesDao.DAOCreditCard;
 import by.epam.payments.CreditCard;
 import by.epam.util.SQLDaoFactory;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditCardDao {
+public class CreditCardDao implements DAOCreditCard {
     private static final String SQL_SELECT_ALL_CARDS = "SELECT idCard, cardNumber, cardtype.cardType, accNumber FROM bank.cards JOIN bank.cardtype ON cardtype.idCardType=cards.CardType " +
             "                                                                                                                   JOIN bank.accounts ON accounts.idAccount=cards.AccID";
     private static final String SQL_CREATE_CARD = "INSERT INTO cards(cardNumber, cardType, AccID) VALUES(?,(SELECT idCardType FROM bank.cardtype WHERE cardType=?)," +
