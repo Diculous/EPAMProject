@@ -33,7 +33,6 @@ public class ClientDao implements DAOClient {
                 st2 = cn.createStatement();
                 ResultSet resultSet2 = st2.executeQuery(SQL_SELECT_ACCOUNTS_FOR_CLIENT + resultSet.getInt("idClient"));
 
-
                 accounts = new ArrayList<>();
                 Client client = new Client();
                 client.setId(resultSet.getInt("idClient"));

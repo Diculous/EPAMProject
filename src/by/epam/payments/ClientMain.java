@@ -8,12 +8,12 @@ import java.util.List;
 public class ClientMain {
     public static void main(String[] args) {
 
-        ClientDao clientDao = new ClientDao();
-        List<Client> clients = clientDao.findAll();
+        BankAccountDao bankAccountDao = new BankAccountDao();
+        List<BankAccount> bankAccounts = bankAccountDao.findAll();
 
-        for(Client cl : clients) {
-            System.out.println(cl);
-            System.out.println(cl.getAccounts());
+        for(BankAccount b1 : bankAccounts) {
+            System.out.println(b1);
+            System.out.println(b1.getCreditCards());
         }
 
         //clientDao.deleteClient(client2);
