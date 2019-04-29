@@ -15,13 +15,12 @@ public class Client {
         this.accounts = new ArrayList<>();
     }
 
-    public Client(int id, String name, String address, String passport, String dateOfBirth, ArrayList<Long> accounts) {
+    public Client(int id, String name, String address, String passport, String dateOfBirth) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.passport = passport;
         this.dateOfBirth = dateOfBirth;
-        this.accounts = accounts;
     }
 
   /*  public Client(String name, BankAccount bankAccount) {

@@ -16,7 +16,8 @@ public class ClientMain {
             System.out.println(cl.getAccounts());
         }
 
-        //creditCardDao.deleteCard(creditCard);
+        //clientDao.deleteClient(client2);
+     //creditCardDao.deleteCard(creditCard);
 
       /*  Client clientZero = new Client(7, "Seventh", "New York", "425345", "243");
         CardType cardTypeZero = new CardType("Gold", 10);
