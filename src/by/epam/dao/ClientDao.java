@@ -2,6 +2,7 @@ package by.epam.dao;
 
 import by.epam.interfacesDao.DAOClient;
 import by.epam.payments.Client;
+import by.epam.util.ConfigurationManager;
 import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
@@ -9,15 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDao implements DAOClient {
-    private static final String SQL_SELECT_ALL_ABONENTS = "" +
-            "SELECT idClient, name, address, passportNumber, dateOfBirth FROM bank.clients \n" +
-            "LEFT JOIN bank.accounts ON accounts.ownerID=clients.idClient\n" +
-            "GROUP BY idClient\n" +
-            "ORDER BY idClient;";
-    private static final String SQL_SELECT_ACCOUNTS_FOR_CLIENT = "SELECT accNumber FROM bank.accounts JOIN bank.clients ON accounts.ownerID=clients.idClient WHERE idClient=";
-    private static final String SQL_CREATE_NEW_CLIENT = "INSERT INTO clients(idClient ,name, address, passportNumber, dateOfBirth) VALUES(?,?,?,?,?)";
-    private static final String SQL_UPDATE_CLIENT = "UPDATE bank.clients SET idClient=?, name=?, address=?, passportNumber=?, dateOfBirth=? WHERE idClient=?";
-    private static final String SQL_DELETE_CLIENT = "DELETE FROM bank.clients WHERE idClient=?";
 
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
@@ -27,11 +19,11 @@ public class ClientDao implements DAOClient {
         ArrayList<Long> accounts;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_ABONENTS);
+            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_ABONENTS"));
             while (resultSet.next()) {
 
                 st2 = cn.createStatement();
-                ResultSet resultSet2 = st2.executeQuery(SQL_SELECT_ACCOUNTS_FOR_CLIENT + resultSet.getInt("idClient"));
+                ResultSet resultSet2 = st2.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ACCOUNTS_FOR_CLIENT") + resultSet.getInt("idClient"));
 
                 accounts = new ArrayList<>();
                 Client client = new Client();
@@ -69,7 +61,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_CREATE_NEW_CLIENT);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_CLIENT"));
             st.setInt(1, client.getId());
             st.setString(2, client.getName());
             st.setString(3, client.getAddress());
@@ -96,7 +88,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_UPDATE_CLIENT);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CLIENT"));
             st.setInt(1, client.getId());
             st.setString(2, client.getName());
             st.setString(3, client.getAddress());
@@ -124,7 +116,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_DELETE_CLIENT);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CLIENT"));
             st.setInt(1, client.getId());
             st.executeUpdate();
             flag = true;

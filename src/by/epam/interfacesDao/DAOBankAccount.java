@@ -7,6 +7,6 @@ import java.util.List;
 public interface DAOBankAccount {
     List<BankAccount> findAll();
     boolean insertBankAccount(BankAccount bankAccount);
-    boolean updateBnakAccount(BankAccount creditCard);
+    boolean updateBankAccount(BankAccount bankAccount);
     boolean deleteBankAccount(BankAccount bankAccount);
 }

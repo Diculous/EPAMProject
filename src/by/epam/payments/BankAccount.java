@@ -4,10 +4,30 @@ import java.util.List;
 import java.util.Objects;
 
 public class BankAccount {
+    private int idAccount;
     private Long accountNumber;             //account number in payment system
     private Boolean isBlocked = false;    //blocked account indicator
+    private int ownerId;
     private List<Long> creditCards;
-                                                                                //getters and setters
+
+    public BankAccount() {
+    }
+
+    public BankAccount(int idAccount, Long accountNumber, Boolean isBlocked, int ownerId) {
+        this.idAccount = idAccount;
+        this.accountNumber = accountNumber;
+        this.isBlocked = isBlocked;
+        this.ownerId = ownerId;
+    }
+
+    public int getIdAccount() {
+        return idAccount;
+    }
+
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
+    }
+
     public Long getAccountNumber() {
         return accountNumber;
     }
@@ -22,6 +42,14 @@ public class BankAccount {
 
     public void setBlocked(Boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public List<Long> getCreditCards() {

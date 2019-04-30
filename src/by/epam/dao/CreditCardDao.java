@@ -2,6 +2,7 @@ package by.epam.dao;
 
 import by.epam.interfacesDao.DAOCreditCard;
 import by.epam.payments.CreditCard;
+import by.epam.util.ConfigurationManager;
 import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
@@ -9,13 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreditCardDao implements DAOCreditCard {
-    private static final String SQL_SELECT_ALL_CARDS = "SELECT idCard, cardNumber, cardtype.cardType, accNumber FROM bank.cards JOIN bank.cardtype ON cardtype.idCardType=cards.CardType " +
-            "                                                                                                                   JOIN bank.accounts ON accounts.idAccount=cards.AccID";
-    private static final String SQL_CREATE_CARD = "INSERT INTO cards(cardNumber, cardType, AccID) VALUES(?,(SELECT idCardType FROM bank.cardtype WHERE cardType=?)," +
-            "                                                                                              (SELECT idAccount FROM bank.accounts WHERE accNumber=?))";
-    private static final String SQL_UPDATE_CURRENT_CARD = "UPDATE bank.cards SET cardNumber=?, cardType=(SELECT idCardType FROM bank.cardtype WHERE cardType=?)," +
-            "                                                                                  cards.AccID=(SELECT idAccount FROM bank.accounts WHERE accNumber=?) WHERE cardNumber=?";
-    private static final String SQL_DELETE_CURRENT_CARD = "DELETE FROM bank.cards WHERE cardNumber=?";
 
     public List<CreditCard> findAll() {
         List<CreditCard> cardTypes = new ArrayList<>();
@@ -23,7 +17,7 @@ public class CreditCardDao implements DAOCreditCard {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_CARDS);
+            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_CARDS"));
             while (resultSet.next()) {
                 CreditCard creditCard = new CreditCard();
                 creditCard.setCardNumber(resultSet.getLong("cardNumber"));
@@ -50,7 +44,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_CREATE_CARD);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
             st.setLong(3, creditCard.getAccount());
@@ -77,7 +71,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
             st.setLong(3, creditCard.getAccount());
@@ -105,7 +99,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.executeUpdate();
             flag = true;

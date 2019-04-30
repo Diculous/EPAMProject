@@ -1,6 +1,7 @@
 package by.epam.dao;
 
 import by.epam.payments.CardType;
+import by.epam.util.ConfigurationManager;
 import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
@@ -8,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
-    private static final String SQL_SELECT_ALL_TYPES_OF_CARDS = "SELECT * FROM cardType";
-    private static final String SQL_CREATE_NEW_CARD_TYPE = "INSERT INTO cardType(cardType, cashbackBonus) VALUES(?,?)";
-    private static final String SQL_UPDATE_CURRENT_CARD_TYPE = "UPDATE bank.cardType SET cardType=?, cashbackBonus=? WHERE cardType=?";
-    private static final String SQL_DELETE_CURRENT_CARD_TYPE = "DELETE FROM bank.cardType WHERE cardType=?";
 
     public List<CardType> findAll() {
         List<CardType> cardTypes = new ArrayList<>();
@@ -19,7 +16,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_TYPES_OF_CARDS);
+            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_CARDS"));
             while (resultSet.next()) {
                 CardType cardType = new CardType();
                 cardType.setCardType(resultSet.getString("cardType"));
@@ -45,7 +42,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_CREATE_NEW_CARD_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
             st.executeUpdate();
@@ -71,7 +68,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_UPDATE_CURRENT_CARD_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
             st.setString(3, oldCardType);
@@ -98,7 +95,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_DELETE_CURRENT_CARD_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.executeUpdate();
             flag = true;

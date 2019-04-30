@@ -1,8 +1,8 @@
-package by.epam.payments;
+package by.epam.util;
 
 import by.epam.dao.*;
+import by.epam.payments.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientMain {
@@ -15,6 +15,7 @@ public class ClientMain {
             System.out.println(b1);
             System.out.println(b1.getCreditCards());
         }
+        //bankAccountDao.deleteBankAccount(bankAccount);
 
         //clientDao.deleteClient(client2);
      //creditCardDao.deleteCard(creditCard);

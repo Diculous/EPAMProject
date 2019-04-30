@@ -2,6 +2,7 @@ package by.epam.dao;
 
 import by.epam.interfacesDao.DAOOperationType;
 import by.epam.payments.OperationType;
+import by.epam.util.ConfigurationManager;
 import by.epam.util.SQLDaoFactory;
 
 import java.sql.*;
@@ -10,18 +11,13 @@ import java.util.List;
 
 public class OperationTypeDao implements DAOOperationType {
 
-    private static final String SQL_SELECT_ALL_TYPES_OF_PAYMENTS = "SELECT * FROM operationtype";
-    private static final String SQL_CREATE_NEW_PAYMENT_TYPE = "INSERT INTO operationtype(operationType) VALUE (?)";
-    private static final String SQL_UPDATE_PAYMENT_TYPE = "UPDATE bank.operationtype SET operationtype=? WHERE operationtype=?";
-    private static final String SQL_DELETE_PAYMENT_TYPE = "DELETE FROM bank.operationtype WHERE operationtype=?";
-
     public List<OperationType> findAll() {
         List<OperationType> operationTypes = new ArrayList<>();
         Connection cn = SQLDaoFactory.createConnection();
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_TYPES_OF_PAYMENTS);
+            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_PAYMENTS"));
             while (resultSet.next()) {
                 OperationType operationType = new OperationType();
                 operationType.setOperationType(resultSet.getString("OperationType"));
@@ -46,7 +42,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_CREATE_NEW_PAYMENT_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.executeUpdate();
             flag = true;
@@ -71,7 +67,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_UPDATE_PAYMENT_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.setString(2, oldOperationType);
             st.executeUpdate();
@@ -97,7 +93,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(SQL_DELETE_PAYMENT_TYPE);
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.executeUpdate();
             flag = true;

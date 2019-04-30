@@ -2,24 +2,14 @@ package by.epam.dao;
 
 import by.epam.interfacesDao.DAOBankAccount;
 import by.epam.payments.BankAccount;
+import by.epam.util.ConfigurationManager;
 import by.epam.util.SQLDaoFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BankAccountDao implements DAOBankAccount {
-    private static final String SQL_SELECT_ALL_BANK_ACCOUNTS =
-            "SELECT idAccount, accNumber, isBlocked FROM bank.accounts " +
-            "GROUP BY idAccount\n" +
-            "ORDER BY idAccount;";
-    private static final String SQL_SELECT_CARDS_FOR_ACCOUNT = "SELECT cardNumber FROM bank.cards WHERE AccID=";
-    private static final String SQL_CREATE_NEW_ACCOUNT = "INSERT INTO accounts(accountNumber , isBlocked) VALUES(?,?)";
-    private static final String SQL_UPDATE_ACCOUNT = "UPDATE bank.accounts SET accountNumber=?, isBlocked=? WHERE idAccount=?";
-    private static final String SQL_DELETE_ACCOUNT = "DELETE FROM bank.accounts WHERE idAccount=?";
 
     @Override
     public List<BankAccount> findAll() {
@@ -30,15 +20,17 @@ public class BankAccountDao implements DAOBankAccount {
         ArrayList<Long> cards;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(SQL_SELECT_ALL_BANK_ACCOUNTS);
+            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_BANK_ACCOUNTS"));
             while(resultSet.next()) {
                 st2 = cn.createStatement();
-                ResultSet resultSet2 = st2.executeQuery(SQL_SELECT_CARDS_FOR_ACCOUNT + resultSet.getInt("idAccount"));
+                ResultSet resultSet2 = st2.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_CARDS_FOR_ACCOUNT") + resultSet.getInt("idAccount"));
 
                 cards = new ArrayList<>();
                 BankAccount bankAccount = new BankAccount();
+                bankAccount.setIdAccount(resultSet.getInt("idAccount"));
                 bankAccount.setAccountNumber(resultSet.getLong("accNumber"));
                 bankAccount.setBlocked(resultSet.getBoolean("isBlocked"));
+                bankAccount.setOwnerId(resultSet.getInt("ownerID"));
 
                 while (resultSet2.next()) {
                     cards.add(resultSet2.getLong("cardNumber"));
@@ -66,17 +58,81 @@ public class BankAccountDao implements DAOBankAccount {
 
     @Override
     public boolean insertBankAccount(BankAccount bankAccount) {
+        boolean flag = false;
+        Connection cn = SQLDaoFactory.createConnection();
+        PreparedStatement st = null;
 
-        return false;
+        try {
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_ACCOUNT"));
+            st.setInt(1, bankAccount.getIdAccount());
+            st.setLong(2, bankAccount.getAccountNumber());
+            st.setBoolean(3, bankAccount.getBlocked());
+            st.setInt(4, bankAccount.getOwnerId());
+            st.executeUpdate();
+            flag = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
     }
 
     @Override
-    public boolean updateBnakAccount(BankAccount creditCard) {
-        return false;
+    public boolean updateBankAccount(BankAccount bankAccount) {
+        boolean flag = false;
+        Connection cn = SQLDaoFactory.createConnection();
+        PreparedStatement st = null;
+
+        try {
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_ACCOUNT"));
+            st.setLong(1, bankAccount.getAccountNumber());
+            st.setBoolean(2, bankAccount.getBlocked());
+            st.setInt(3, bankAccount.getOwnerId());
+            st.setInt(4, bankAccount.getIdAccount());
+            st.executeUpdate();
+            flag = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
     }
 
     @Override
     public boolean deleteBankAccount(BankAccount bankAccount) {
-        return false;
+        boolean flag = false;
+        Connection cn = SQLDaoFactory.createConnection();
+        PreparedStatement st = null;
+
+        try {
+            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_ACCOUNT"));
+            st.setInt(1, bankAccount.getIdAccount());
+            st.executeUpdate();
+            flag = true;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                st.close();
+                cn.close();
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
     }
 }
