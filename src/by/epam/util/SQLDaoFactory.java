@@ -7,10 +7,12 @@ import java.sql.SQLException;
 public class SQLDaoFactory {
     private static Connection connection = null;
 
+
     public static Connection createConnection() {
         try {
-            Class.forName(ConfigurationManager.getProperty("DRIVER"));
-            connection = DriverManager.getConnection(ConfigurationManager.getProperty("URL"), ConfigurationManager.getProperty("USER"), ConfigurationManager.getProperty("PASSWORD"));
+            ConfigurationManager configurationManager = ConfigurationManager.getInstance();
+            Class.forName(configurationManager.getProperty("DRIVER"));
+            connection = DriverManager.getConnection(configurationManager.getProperty("URL"), configurationManager.getProperty("USER"), configurationManager.getProperty("PASSWORD"));
         }
         catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

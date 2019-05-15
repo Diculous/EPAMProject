@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperationTypeDao implements DAOOperationType {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     public List<OperationType> findAll() {
         List<OperationType> operationTypes = new ArrayList<>();
@@ -17,7 +18,7 @@ public class OperationTypeDao implements DAOOperationType {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_PAYMENTS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_PAYMENTS"));
             while (resultSet.next()) {
                 OperationType operationType = new OperationType();
                 operationType.setOperationType(resultSet.getString("OperationType"));
@@ -42,7 +43,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_PAYMENT_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_NEW_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.executeUpdate();
             flag = true;
@@ -67,7 +68,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_PAYMENT_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.setString(2, oldOperationType);
             st.executeUpdate();
@@ -93,7 +94,7 @@ public class OperationTypeDao implements DAOOperationType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_PAYMENT_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_PAYMENT_TYPE"));
             st.setString(1, operationType.getOperationType());
             st.executeUpdate();
             flag = true;

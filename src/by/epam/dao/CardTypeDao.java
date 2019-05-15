@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     public List<CardType> findAll() {
         List<CardType> cardTypes = new ArrayList<>();
@@ -16,7 +17,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_CARDS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_CARDS"));
             while (resultSet.next()) {
                 CardType cardType = new CardType();
                 cardType.setCardType(resultSet.getString("cardType"));
@@ -42,7 +43,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_CARD_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_NEW_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
             st.executeUpdate();
@@ -68,7 +69,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.setInt(2, cardType.getCashBack());
             st.setString(3, oldCardType);
@@ -95,7 +96,7 @@ public class CardTypeDao implements by.epam.interfacesDao.DAOCardType {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD_TYPE"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD_TYPE"));
             st.setString(1, cardType.getCardType());
             st.executeUpdate();
             flag = true;

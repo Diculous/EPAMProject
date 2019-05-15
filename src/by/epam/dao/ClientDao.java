@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDao implements DAOClient {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
@@ -19,11 +20,11 @@ public class ClientDao implements DAOClient {
         ArrayList<Long> accounts;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_ABONENTS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_ABONENTS"));
             while (resultSet.next()) {
 
                 st2 = cn.createStatement();
-                ResultSet resultSet2 = st2.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ACCOUNTS_FOR_CLIENT") + resultSet.getInt("idClient"));
+                ResultSet resultSet2 = st2.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ACCOUNTS_FOR_CLIENT") + resultSet.getInt("idClient"));
 
                 accounts = new ArrayList<>();
                 Client client = new Client();
@@ -61,7 +62,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_CLIENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_NEW_CLIENT"));
             st.setInt(1, client.getId());
             st.setString(2, client.getName());
             st.setString(3, client.getAddress());
@@ -88,7 +89,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CLIENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_CLIENT"));
             st.setInt(1, client.getId());
             st.setString(2, client.getName());
             st.setString(3, client.getAddress());
@@ -116,7 +117,7 @@ public class ClientDao implements DAOClient {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CLIENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_CLIENT"));
             st.setInt(1, client.getId());
             st.executeUpdate();
             flag = true;

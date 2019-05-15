@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreditCardDao implements DAOCreditCard {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     public List<CreditCard> findAll() {
         List<CreditCard> cardTypes = new ArrayList<>();
@@ -17,7 +18,7 @@ public class CreditCardDao implements DAOCreditCard {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_CARDS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_CARDS"));
             while (resultSet.next()) {
                 CreditCard creditCard = new CreditCard();
                 creditCard.setCardNumber(resultSet.getLong("cardNumber"));
@@ -44,7 +45,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_CARD"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
             st.setLong(3, creditCard.getAccount());
@@ -71,7 +72,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_CURRENT_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.setString(2, creditCard.getCardType());
             st.setLong(3, creditCard.getAccount());
@@ -99,7 +100,7 @@ public class CreditCardDao implements DAOCreditCard {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_CURRENT_CARD"));
             st.setLong(1, creditCard.getCardNumber());
             st.executeUpdate();
             flag = true;

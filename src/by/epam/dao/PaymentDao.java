@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDao implements DAOPayment {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     public List<Payment> findAll() {
         List<Payment> payments = new ArrayList<>();
@@ -17,7 +18,7 @@ public class PaymentDao implements DAOPayment {
         Statement st = null;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_PAYMENTS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_PAYMENTS"));
             while (resultSet.next()) {
                 Payment payment = new Payment();
                 payment.setPaymentValue(resultSet.getInt("paymentValue"));
@@ -44,7 +45,7 @@ public class PaymentDao implements DAOPayment {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_PAYMENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_PAYMENT"));
             st.setInt(1, payment.getPaymentValue());
             st.setString(2, payment.getPaymentType());
             st.setLong(3, payment.getBankAccount());
@@ -71,7 +72,7 @@ public class PaymentDao implements DAOPayment {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_PAYMENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_PAYMENT"));
             st.setInt(1, payment.getPaymentValue());
             st.setString(2, payment.getPaymentType());
             st.setLong(3, payment.getBankAccount());
@@ -99,7 +100,7 @@ public class PaymentDao implements DAOPayment {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_PAYMENT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_PAYMENT"));
             st.setInt(1, id);
             st.executeUpdate();
             flag = true;

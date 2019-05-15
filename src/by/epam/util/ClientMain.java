@@ -1,14 +1,14 @@
 package by.epam.util;
 
-import by.epam.dao.*;
-import by.epam.payments.*;
-
-import java.util.List;
-
 public class ClientMain {
     public static void main(String[] args) {
 
-        BankAccountDao bankAccountDao = new BankAccountDao();
+    /*ConfigurationManager configurationManager = ConfigurationManager.getInstance();
+
+    System.out.println(configurationManager.getProperty("URL"));
+    System.out.println(configurationManager.getPropertySQL("SQL_SELECT_ALL_TYPES_OF_CARDS"));
+
+     /*   BankAccountDao bankAccountDao = new BankAccountDao();
         List<BankAccount> bankAccounts = bankAccountDao.findAll();
 
         for(BankAccount b1 : bankAccounts) {
@@ -76,7 +76,7 @@ public class ClientMain {
         for(CardType cl : cardTypes) {
             System.out.println(cl);
         }
-*/
+
      /*   Set<Payment> payments = new HashSet<>();
 
         BankAccount bankAccount = new BankAccount();

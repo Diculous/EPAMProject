@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankAccountDao implements DAOBankAccount {
+    ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
     @Override
     public List<BankAccount> findAll() {
@@ -20,10 +21,10 @@ public class BankAccountDao implements DAOBankAccount {
         ArrayList<Long> cards;
         try {
             st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_ALL_BANK_ACCOUNTS"));
+            ResultSet resultSet = st.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_ALL_BANK_ACCOUNTS"));
             while(resultSet.next()) {
                 st2 = cn.createStatement();
-                ResultSet resultSet2 = st2.executeQuery(ConfigurationManager.getPropertySQL("SQL_SELECT_CARDS_FOR_ACCOUNT") + resultSet.getInt("idAccount"));
+                ResultSet resultSet2 = st2.executeQuery(configurationManager.getPropertySQL("SQL_SELECT_CARDS_FOR_ACCOUNT") + resultSet.getInt("idAccount"));
 
                 cards = new ArrayList<>();
                 BankAccount bankAccount = new BankAccount();
@@ -63,7 +64,7 @@ public class BankAccountDao implements DAOBankAccount {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_CREATE_NEW_ACCOUNT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_CREATE_NEW_ACCOUNT"));
             st.setInt(1, bankAccount.getIdAccount());
             st.setLong(2, bankAccount.getAccountNumber());
             st.setBoolean(3, bankAccount.getBlocked());
@@ -90,7 +91,7 @@ public class BankAccountDao implements DAOBankAccount {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_UPDATE_ACCOUNT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_UPDATE_ACCOUNT"));
             st.setLong(1, bankAccount.getAccountNumber());
             st.setBoolean(2, bankAccount.getBlocked());
             st.setInt(3, bankAccount.getOwnerId());
@@ -117,7 +118,7 @@ public class BankAccountDao implements DAOBankAccount {
         PreparedStatement st = null;
 
         try {
-            st = cn.prepareStatement(ConfigurationManager.getPropertySQL("SQL_DELETE_ACCOUNT"));
+            st = cn.prepareStatement(configurationManager.getPropertySQL("SQL_DELETE_ACCOUNT"));
             st.setInt(1, bankAccount.getIdAccount());
             st.executeUpdate();
             flag = true;
